@@ -2,8 +2,8 @@
 from __future__ import annotations
 
 ROOMMATES = 4
-PER_PERSON_BUDGET = 2000
-MAX_TOTAL_RENT = ROOMMATES * PER_PERSON_BUDGET  # 8000
+# Hard cap on total monthly rent. At 4 roommates this works out to ~$1,562/person.
+MAX_TOTAL_RENT = 6250
 MIN_BEDROOMS = 3  # 4 people can share a 3BR or 4BR
 
 # Priority order: lower number = higher priority. Used for ranking, not filtering.
@@ -48,12 +48,12 @@ BLOCKED_NEIGHBORHOODS = {
 
 # Craigslist RSS feeds (public, ToS-compliant).
 CRAIGSLIST_FEEDS = [
-    # Manhattan apartments, 3BR+, up to $8000
+    # Manhattan apartments, 3BR+, up to $6,250
     "https://newyork.craigslist.org/search/mnh/apa?format=rss"
-    "&min_bedrooms=3&max_price=8000&availabilityMode=0",
+    "&min_bedrooms=3&max_price=6250&availabilityMode=0",
     # Brooklyn apartments, filtered further by neighborhood in code
     "https://newyork.craigslist.org/search/brk/apa?format=rss"
-    "&min_bedrooms=3&max_price=8000&availabilityMode=0",
+    "&min_bedrooms=3&max_price=6250&availabilityMode=0",
 ]
 
 # Known senders we parse from the shared Gmail inbox. Any email whose From

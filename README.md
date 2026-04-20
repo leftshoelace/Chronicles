@@ -3,7 +3,7 @@
 Aggregates NYC apartment listings from every major source into one Telegram
 channel for 4 roommates. Runs on a GitHub Actions cron — no server required.
 
-**Criteria:** 3BR+ up to $8,000/mo total. Manhattan (excluding Harlem / Inwood
+**Criteria:** 3BR+ up to $6,250/mo total. Manhattan (excluding Harlem / Inwood
 / Washington Heights) + Williamsburg / Greenpoint. Priority: East Village >
 LES > Williamsburg > FiDi > UWS > UES > everything else.
 
@@ -75,7 +75,7 @@ IMAP, generate a Google App Password:
 For each of the sites in the table above:
 
 1. Sign in (or create an account) using `cwbapartment@gmail.com`.
-2. Configure a search: 3+ bedrooms, max rent $8,000, neighborhoods = East
+2. Configure a search: 3+ bedrooms, max rent $6,250, neighborhoods = East
    Village, LES, Williamsburg, FiDi, UWS, UES (add every Manhattan neighborhood
    that the site's filter UI allows).
 3. Save the search and turn on "email me new listings" / "instant alerts".
