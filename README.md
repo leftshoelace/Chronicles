@@ -11,7 +11,7 @@ LES > Williamsburg > FiDi > UWS > UES > everything else.
 
 ```
            +-----------------+       +-----------------+
-           | cwbapartment@   |       | Craigslist RSS  |
+           | cbwapartment@   |       | Craigslist RSS  |
            | gmail.com       |       | (Manhattan,     |
            | saved-search    |       |  Brooklyn apa)  |
            | alerts          |       +--------+--------+
@@ -63,7 +63,7 @@ the supported, stable, legal API surface. No Playwright, no proxies, no bans.
 
 ### 1. Gmail App Password
 
-The shared inbox is `cwbapartment@gmail.com`. To let the scraper sign in via
+The shared inbox is `cbwapartment@gmail.com`. To let the scraper sign in via
 IMAP, generate a Google App Password:
 
 1. Turn on 2FA on the account: <https://myaccount.google.com/security>
@@ -74,7 +74,7 @@ IMAP, generate a Google App Password:
 
 For each of the sites in the table above:
 
-1. Sign in (or create an account) using `cwbapartment@gmail.com`.
+1. Sign in (or create an account) using `cbwapartment@gmail.com`.
 2. Configure a search: 3+ bedrooms, max rent $6,250, neighborhoods = East
    Village, LES, Williamsburg, FiDi, UWS, UES (add every Manhattan neighborhood
    that the site's filter UI allows).
@@ -109,7 +109,7 @@ Rough guide (exact menus change):
 
 On the repo: Settings → Secrets and variables → Actions → New secret. Add:
 
-- `GMAIL_ADDRESS` = `cwbapartment@gmail.com`
+- `GMAIL_ADDRESS` = `cbwapartment@gmail.com`
 - `GMAIL_APP_PASSWORD` = (from step 1)
 - `TELEGRAM_BOT_TOKEN` = (from step 3)
 - `TELEGRAM_CHAT_ID` = (from step 3, include the leading `-`)
