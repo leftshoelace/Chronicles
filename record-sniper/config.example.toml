@@ -1,0 +1,74 @@
+# Copy to config.toml and fill in. Secrets can instead come from environment variables:
+# DISCOGS_TOKEN, EBAY_CLIENT_ID, EBAY_CLIENT_SECRET, NTFY_TOPIC, DISCORD_WEBHOOK, SMTP_PASSWORD
+
+[general]
+home_zip = "10001"            # used for local-pickup search and shipping estimates
+country = "US"
+currency = "USD"
+local_radius_miles = 30
+wantlist = "wantlist.csv"
+db_path = "sniper.db"
+
+default_shipping = 5.0        # assumed when a listing doesn't say (0 for local)
+deal_ratio = 0.6              # flag anything at <= 60% of fair value...
+steal_ratio = 0.4             # ...and call it a STEAL at <= 40%
+min_flip_profit = 10.0        # also flag if reselling at fair value would net this much
+resale_fee_pct = 0.15         # marketplace + payment fees when you flip
+auction_alert_hours = 12      # only alert on auctions ending within this many hours
+match_threshold = 0.8         # how strictly listing titles must match artist + title (0-1)
+realert_drop_pct = 10         # re-alert on a listing only if its price drops this much more
+max_alerts_per_scan = 20
+
+[discogs]
+# Free personal token: https://www.discogs.com/settings/developers
+# Needed for fair-value lookups. Fill in your seller settings on Discogs to unlock price suggestions;
+# otherwise the lowest current listing is used as the reference.
+token = ""
+reference_condition = "Very Good Plus (VG+)"
+cache_hours = 24
+as_source = true              # alert when the cheapest Discogs listing itself is a deal
+
+[ebay]
+# Free keys: https://developer.ebay.com/my/keys (Production "App ID" and "Cert ID")
+client_id = ""
+client_secret = ""
+marketplace = "EBAY_US"
+include_auctions = true
+local_search = true           # second search limited to local pickup near home_zip
+
+# Independent record shops running Shopify. Add as many as you like.
+# Quick test: open https://SHOP/search/suggest.json?q=miles+davis in a browser — if you get JSON, it works.
+# [[shopify]]
+# name = "My Local Shop"
+# url = "https://example-records.com"
+# local = true                # you can walk in / pick up
+# location = "Downtown"
+#
+# [[shopify]]
+# name = "Some Online Shop"
+# url = "https://another-shop.com"
+# shipping = 6.0
+
+# Any site with a search RSS/Atom feed. {query} and {max_price} are filled in per record.
+# [[rss]]
+# name = "Some Classifieds"
+# url = "https://example.com/search.rss?q={query}&max={max_price}"
+# local = true
+
+[notify]
+console = true
+# Phone push with no account: install the ntfy app, subscribe to a hard-to-guess topic name.
+ntfy_topic = ""
+ntfy_server = "https://ntfy.sh"
+discord_webhook = ""
+
+# [notify.email]               # one digest email per scan
+# smtp_host = "smtp.gmail.com"
+# smtp_port = 587
+# username = "you@gmail.com"   # Gmail needs an App Password (put it in SMTP_PASSWORD)
+# to = "you@gmail.com"
+
+[links]
+# For the field guide's Facebook Marketplace / Craigslist search links.
+facebook_city = "nyc"         # the slug in facebook.com/marketplace/<slug>/
+craigslist_site = "newyork"   # the subdomain in <site>.craigslist.org

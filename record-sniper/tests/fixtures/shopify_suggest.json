@@ -1,0 +1,4 @@
+{"resources": {"results": {"products": [
+ {"id": 1, "title": "Kind Of Blue (Used, VG+)", "vendor": "Miles Davis", "price": "12.00", "available": true, "url": "/products/kind-of-blue-used?_pos=1&_sid=x", "image": "https://cdn.shopify.com/a.jpg"},
+ {"id": 2, "title": "Kind Of Blue (180g)", "vendor": "Miles Davis", "price": "29.99", "available": false, "url": "/products/kind-of-blue"}
+]}}}

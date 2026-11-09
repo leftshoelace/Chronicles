@@ -1,0 +1,13 @@
+{"total": 4, "itemSummaries": [
+ {"itemId": "v1|111|0", "title": "Miles Davis Kind Of Blue LP Columbia CS 8163 VG+", "price": {"value": "9.99", "currency": "USD"},
+  "buyingOptions": ["FIXED_PRICE"], "itemWebUrl": "https://www.ebay.com/itm/111",
+  "shippingOptions": [{"shippingCostType": "FIXED", "shippingCost": {"value": "4.50", "currency": "USD"}}],
+  "itemLocation": {"postalCode": "190**", "country": "US"}, "condition": "Used"},
+ {"itemId": "v1|222|0", "title": "MILES DAVIS - KIND OF BLUE CD", "price": {"value": "3.00", "currency": "USD"},
+  "buyingOptions": ["FIXED_PRICE"], "itemWebUrl": "https://www.ebay.com/itm/222"},
+ {"itemId": "v1|333|0", "title": "Miles Davis Kind of Blue vinyl", "price": {"value": "25.00", "currency": "USD"},
+  "currentBidPrice": {"value": "6.00", "currency": "USD"}, "buyingOptions": ["AUCTION"],
+  "itemEndDate": "2026-11-09T06:00:00.000Z", "itemWebUrl": "https://www.ebay.com/itm/333"},
+ {"itemId": "v1|444|0", "title": "Kind of Blue Miles Davis 180g", "price": {"value": "8.00", "currency": "USD"},
+  "buyingOptions": ["FIXED_PRICE", "BEST_OFFER"], "itemWebUrl": "https://www.ebay.com/itm/444"}
+]}
