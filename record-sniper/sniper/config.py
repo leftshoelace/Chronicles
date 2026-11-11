@@ -49,6 +49,10 @@ class Config:
     discord_webhook: str = ""
     email: dict = field(default_factory=dict)
 
+    # spotify
+    spotify_client_id: str = ""
+    spotify_redirect_uri: str = "http://127.0.0.1:8888/callback"
+
     # links / field guide
     facebook_city: str = ""
     craigslist_site: str = ""
@@ -104,6 +108,10 @@ def load_config(path: str | Path | None) -> Config:
     cfg.discord_webhook = n.get("discord_webhook", cfg.discord_webhook)
     cfg.email = n.get("email", {})
 
+    sp = raw.get("spotify", {})
+    cfg.spotify_client_id = sp.get("client_id", cfg.spotify_client_id)
+    cfg.spotify_redirect_uri = sp.get("redirect_uri", cfg.spotify_redirect_uri)
+
     lk = raw.get("links", {})
     cfg.facebook_city = lk.get("facebook_city", cfg.facebook_city)
     cfg.craigslist_site = lk.get("craigslist_site", cfg.craigslist_site)
@@ -113,6 +121,7 @@ def load_config(path: str | Path | None) -> Config:
     cfg.discogs_token = env.get("DISCOGS_TOKEN", cfg.discogs_token)
     cfg.ebay_client_id = env.get("EBAY_CLIENT_ID", cfg.ebay_client_id)
     cfg.ebay_client_secret = env.get("EBAY_CLIENT_SECRET", cfg.ebay_client_secret)
+    cfg.spotify_client_id = env.get("SPOTIFY_CLIENT_ID", cfg.spotify_client_id)
     cfg.ntfy_topic = env.get("NTFY_TOPIC", cfg.ntfy_topic)
     cfg.discord_webhook = env.get("DISCORD_WEBHOOK", cfg.discord_webhook)
     if env.get("SMTP_PASSWORD"):

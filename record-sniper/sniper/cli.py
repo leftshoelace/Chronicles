@@ -15,6 +15,7 @@ from .matching import is_match
 from .models import Deal, Listing, WantItem
 from .notify import Notifier
 from .scoring import buy_under, evaluate
+from .spotify import SpotifyAuth, SpotifyClient, analyze, to_wants
 from .sources import build_sources
 from .sources.discogs import DiscogsClient, PriceGuide
 from .wantlist import load_wantlist, write_wantlist
@@ -111,6 +112,39 @@ def cmd_import(cfg: Config, store: Store, args) -> int:
     return 0
 
 
+def cmd_spotify(cfg: Config, store: Store, args) -> int:
+    if not cfg.spotify_client_id:
+        print("Set spotify client_id in config.toml (or SPOTIFY_CLIENT_ID). Setup steps are in the README.")
+        return 2
+    auth = SpotifyAuth(cfg.spotify_client_id, cfg.path("spotify_token.json"), cfg.spotify_redirect_uri)
+    client = SpotifyClient(auth.access_token(open_browser=not args.no_browser))
+    tracks = client.saved_tracks()
+    try:
+        top = client.top_artists()
+    except Exception as e:  # top artists are a bonus signal; don't fail without them
+        print(f"  (couldn't read top artists: {e})")
+        top = []
+    albums = analyze(tracks, top, min_liked=args.min_liked, min_fraction=args.min_fraction)
+    wl_path = cfg.path(cfg.wantlist)
+    have = {w.key for w in _safe_wantlist(cfg)}
+    albums = [a for a in albums if WantItem(a.artist, a.title).key not in have][: args.limit]
+
+    print(f"{len(tracks)} liked songs -> {len(albums)} album suggestions not already on your wantlist\n")
+    for n, a in enumerate(albums, 1):
+        print(f"{n:>3}. {a.artist} - {a.title}" + (f" ({a.year})" if a.year else "") + f"   [{a.reason()}]")
+    if top:
+        print("\nYour top artists: " + ", ".join(top[:10]))
+    wants = to_wants(albums)
+    out = Path(args.output)
+    write_wantlist(out, wants)
+    print(f"\nsaved to {out} - review it, or re-run with --add to put them on your wantlist")
+    if args.add and wants:
+        existing = _safe_wantlist(cfg)
+        write_wantlist(wl_path, existing + wants)
+        print(f"added {len(wants)} to {wl_path} - fill in max_price for the ones you care about")
+    return 0
+
+
 def cmd_deals(cfg: Config, store: Store, args) -> int:
     rows = store.recent_alerts(args.limit)
     if not rows:
@@ -155,6 +189,14 @@ def main(argv: list[str] | None = None) -> int:
     i.add_argument("username")
     i.add_argument("-o", "--output", default="wantlist.csv")
 
+    sp = sub.add_parser("import-spotify", help="rank albums from your Spotify liked songs and suggest them as wants")
+    sp.add_argument("--min-liked", type=int, default=2, help="liked songs needed from an album (default 2)")
+    sp.add_argument("--min-fraction", type=float, default=0.3, help="...or this share of the album liked (default 0.3)")
+    sp.add_argument("--limit", type=int, default=50)
+    sp.add_argument("--add", action="store_true", help="add the suggestions to your wantlist.csv")
+    sp.add_argument("--no-browser", action="store_true", help="print the login URL instead of opening a browser")
+    sp.add_argument("-o", "--output", default="suggestions.csv")
+
     d = sub.add_parser("deals", help="show recent alerts")
     d.add_argument("--limit", type=int, default=30)
 
@@ -177,6 +219,8 @@ def main(argv: list[str] | None = None) -> int:
             return cmd_guide(cfg, store, args)
         elif args.cmd == "import-discogs":
             return cmd_import(cfg, store, args)
+        elif args.cmd == "import-spotify":
+            return cmd_spotify(cfg, store, args)
         elif args.cmd == "deals":
             return cmd_deals(cfg, store, args)
     except KeyboardInterrupt:

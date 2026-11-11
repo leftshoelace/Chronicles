@@ -3,3 +3,5 @@ wantlist.csv
 sniper.db
 guide.html
 __pycache__/
+spotify_token.json
+suggestions.csv

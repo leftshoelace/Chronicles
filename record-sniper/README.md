@@ -48,6 +48,25 @@ cp wantlist.example.csv wantlist.csv
 
 You can put secrets in environment variables instead: `DISCOGS_TOKEN`, `EBAY_CLIENT_ID`, `EBAY_CLIENT_SECRET`, `NTFY_TOPIC`, `DISCORD_WEBHOOK`, `SMTP_PASSWORD`.
 
+## Build your wantlist from Spotify
+
+Instead of typing records in by hand, let your listening decide. This reads your **liked songs** and **top artists**, groups them by album, and ranks the albums you love most. Several liked songs from one album, or most of the album liked, put it near the top. Albums by your most-played artists get a boost. Singles and compilations are skipped, and deluxe, remaster and standard editions are merged into one album.
+
+One-time setup (2 minutes, free):
+1. Go to https://developer.spotify.com/dashboard and create an app.
+2. Add this exact Redirect URI: `http://127.0.0.1:8888/callback`. It must be `127.0.0.1`, not `localhost`.
+3. Copy the app's **Client ID** into `[spotify] client_id` in `config.toml`.
+
+```bash
+python -m sniper import-spotify            # log in, rank albums, save suggestions.csv for you to review
+python -m sniper import-spotify --add      # ...and add them straight to wantlist.csv
+```
+
+- The first run opens a browser to log in. It's read-only (`user-library-read` and `user-top-read`). Your login is saved in `spotify_token.json`, readable only by you.
+- On a machine with no browser, use `--no-browser` and paste the redirected address back in when asked.
+- Albums already on your wantlist are skipped. Tune with `--min-liked` and `--min-fraction`.
+- Suggestions have no `max_price`, so they're judged against the Discogs fair value (flagged at 60% or less). Set a `max_price` on the ones you care about.
+
 ## Use
 
 ```bash

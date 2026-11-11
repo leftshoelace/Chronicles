@@ -55,6 +55,12 @@ local_search = true           # second search limited to local pickup near home_
 # url = "https://example.com/search.rss?q={query}&max={max_price}"
 # local = true
 
+[spotify]
+# Free app: https://developer.spotify.com/dashboard  -> create app, add the Redirect URI below, copy the Client ID.
+# Read-only; used by `python -m sniper import-spotify`.
+client_id = ""
+redirect_uri = "http://127.0.0.1:8888/callback"
+
 [notify]
 console = true
 # Phone push with no account: install the ntfy app, subscribe to a hard-to-guess topic name.
